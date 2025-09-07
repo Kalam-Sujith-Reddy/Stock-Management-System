@@ -1,0 +1,47 @@
+<!--
+ Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+ Licensed under The Universal Permissive License (UPL), Version 1.0
+ as shown at https://oss.oracle.com/licenses/upl/
+ -->
+<div class="oj-hybrid-padding">
+  <h1>Customers Page</h1>
+  <div>
+   <button data-bind="click:toggleCustomers, text: showTable() ? 'Hide Customers' : 'List Customers'">List Customer</button>
+    <button data-bind="click: toggleDeleteForm">Delete Customer</button>
+       <div data-bind="visible:showTable">
+          <h3>Customer details table</h3>
+<table border="3" >
+  <thead>
+    <tr>
+      <th>Customer ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>City</th>
+    </tr>
+  </thead>
+  <tbody data-bind="foreach: customers">
+    <tr>
+      <td data-bind="text: custId"></td>
+      <td data-bind="text: firstName"></td>
+      <td data-bind="text: lastName"></td>
+      <td data-bind="text: phoneNumber"></td>
+      <td data-bind="text: emailId"></td>
+       <td data-bind="text: city"></td>
+
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+  </div>
+</div>
+
+<div data-bind="visible: showDeleteForm">
+  <h3>Delete Stock</h3>
+  <label>Customer ID: <input data-bind="value: stockIdToDelete"></label>
+  <button data-bind="click: deleteStock">Delete Customer</button>
+</div>
+
+ 
