@@ -1,0 +1,128 @@
+<!--
+ Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+ Licensed under The Universal Permissive License (UPL), Version 1.0
+ as shown at https://oss.oracle.com/licenses/upl/
+ -->
+<div class="oj-hybrid-padding">
+  <h1>Transactions Page</h1>
+<!-- Toggle Button -->
+<button class ="app-btn" data-bind="click: toggleTransactions, text: showTable() ? 'Hide Transactions' : 'Show Transactions'"></button>
+
+<!-- Transactions Table -->
+<div data-bind="visible: showTable">
+  <h3>Transactions</h3>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Transaction ID</th>
+        <th>Stock Id</th>
+        <th>Customer ID</th>
+        <th>Transaction Price</th>
+        <th>Transaction type</th>
+        <th>Transaction quantity</th>
+        <th>Transaction Date</th>
+        <!-- Add more columns if your transaction model has more fields -->
+      </tr>
+    </thead>
+    <tbody data-bind="foreach: transactions">
+      <tr>
+        <td data-bind="text: txnId"></td>
+        <td data-bind="text: custId"></td>
+        <td data-bind="text: stockId"></td>
+        <td data-bind="text: txnPrice"></td>
+        <td data-bind="text:txnType"></td>
+        <td data-bind="text:qty"></td>
+        <td data-bind="text:txnDate"></td>
+        <!-- Bind more columns as necessary -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<style>
+  /* Table container styling */
+[data-bind="visible: showTable"] {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 16px rgba(53, 92, 125, 0.11);
+  padding: 2rem;
+  margin: 2rem 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+[data-bind="visible: showTable"] h3 {
+  color: #355C7D;
+  margin-bottom: 1.2rem;
+}
+
+/* Table itself */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f8fafd;
+}
+
+th, td {
+  padding: 0.85em 1.2em;
+  text-align: left;
+  font-size: 1rem;
+}
+
+/* Header row styling */
+th {
+  background: #355C7D;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-bottom: 3px solid #FFC75F; /* Amber accent */
+}
+
+/* Zebra striping for readability */
+tbody tr:nth-child(odd) {
+  background: #eaf6fb;
+}
+tbody tr:nth-child(even) {
+  background: #fdfdfe;
+}
+
+/* Table row hover */
+tbody tr:hover {
+  background: #FF6B6B22; /* Coral with transparency */
+  transition: background 0.18s;
+}
+
+/* Optional: Soft border on entire table */
+table {
+  border-radius: 10px;
+  overflow: hidden;
+  border: none;
+}
+
+/* For better appearance, hide table's default border */
+table, th, td {
+  border: none;
+}
+
+.app-btn {
+  background: #FFEB3B;         /* Bright Yellow */
+  color: #355C7D;              /* Deep blue text */
+  border: none;
+  border-radius: 22px;         /* Consistent pill shape */
+  padding: 0.6em 1.4em;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.4em 0.6em 1.3em 0;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.13s;
+  box-shadow: 0 2px 8px rgba(53, 92, 125, 0.09);
+}
+
+.app-btn:hover,
+.app-btn:focus {
+  background: #FFF9C4;         /* Light yellow on hover */
+  color: #355C7D;
+  box-shadow: 0 4px 16px rgba(53, 92, 125, 0.16);
+}
+</style>

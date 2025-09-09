@@ -1,0 +1,95 @@
+/*
+    Document   : override
+    Created on : <date>
+    Author     : <author>
+    Description:
+        This is where any of your application specific styles should be included
+*/
+
+.send-off-screen {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.demo-oracle-icon {
+  width:137px;
+  height:18px;
+  content:url("images/oracle_logo.svg")
+}
+
+html:not([dir="rtl"]) .demo-oracle-icon {
+  padding-right:4px
+}
+
+html[dir="rtl"] .demo-oracle-icon {
+  padding-left:4px
+}
+
+.demo-oracle-icon:before {
+  display:inline
+}
+
+.demo-appheader-avatar {
+  width:24px;
+  height:24px
+}
+
+.demo-appheader-avatar:before {
+  content:url("images/avatar_24px.png")
+}
+
+/* Navigation bar */
+.oj-web-applayout-navbar {
+  background-color: white;
+  padding: 0.5rem 0;
+}
+#navTabBar .oj-tabbar-element {
+  justify-content: center !important;
+}
+#navTabBar .oj-tabbar-item .oj-tabbar-item-content {
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+  padding: 0.5rem 1.2rem;
+}
+#navTabBar .oj-selected .oj-tabbar-item-content {
+  background-color: white !important; /* Coral on select */
+  color: #fff !important;
+}
+#navTabBar .oj-tabbar-item:not(.oj-selected):hover .oj-tabbar-item-content {
+  background-color: lightblue;
+  color: #fff;
+}
+
+/* Stock buttons, e.g., .amber-btn class */
+.amber-btn {
+  background: white;
+  color: white;
+  font-weight: 600;
+  padding: 0.7em 2em;
+  border: none;
+  border-radius: 22px;
+  font-size: 1.05rem;
+  box-shadow: 0 2px 8px rgba(53, 92, 125, 0.09);
+  margin: 0.25em 0.5em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.15s, transform 0.15s;
+}
+.amber-btn:hover, .amber-btn:focus {
+  background: white;
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.14);
+  transform: scale(1.06);
+}
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
+  .demo-appheader-avatar:before {
+      content:url("images/avatar_24px_2x.png");
+      -webkit-transform:translate(-25%, -25%) scale(0.5);
+      transform:translate(-25%, -25%) scale(0.5)
+  }
+}

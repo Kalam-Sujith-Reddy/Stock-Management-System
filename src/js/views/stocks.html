@@ -1,0 +1,252 @@
+<!--
+ Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+ Licensed under The Universal Permissive License (UPL), Version 1.0
+ as shown at https://oss.oracle.com/licenses/upl/
+ -->
+<div class="oj-hybrid-padding">
+  <h1>Stocks Page</h1>
+  <div>
+       <div class="button-group">
+  <button class="green-btn" data-bind="click: toggleForm">Add Stock</button>
+  <button class="green-btn" data-bind="click: toggleDeleteForm">Delete Stock</button>
+  <button class="green-btn" data-bind="click:toggleStocks, text: showTable() ? 'Hide Stocks' : 'List Stocks'">List Stocks</button>
+  <button class="green-btn" data-bind="click: toggleUpdateForm, text: showUpdateForm() ? 'Hide Update Form' : 'Show Update Form'">Update Stock</button>
+</div>
+  
+        <div data-bind="visible:showTable">
+          <h3>Stocks table</h3>
+<table border="3" >
+  <thead>
+    <tr>
+      <th>Stock ID</th>
+      <th>Stock Name</th>
+      <th>Stock Price</th>
+      <th>Stock Volume</th>
+      <th>Listed Price</th>
+      <th>Listed Date</th>
+      <th>Listed Exchange</th>
+    </tr>
+  </thead>
+  <tbody data-bind="foreach: Stockss">
+    <tr>
+      <td data-bind="text: stockId"></td>
+      <td data-bind="text: stockName"></td>
+      <td data-bind="text: stockPrice"></td>
+      <td data-bind="text: stockVolume"></td>
+      <td data-bind="text: listingPrice"></td>
+       <td data-bind="text: listedDate"></td>
+       <td data-bind="text:listedExchange "></td>
+
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+
+<div data-bind="visible: showForm">
+  <h3>Add New Stock</h3>
+  <label>Stock Id: <input type="number" data-bind="value: newStockId"></label><br>
+  <label>Stock Name: <input data-bind="value: newStockName"></label><br>
+  <label>Stock Price: <input type="number" data-bind="value: newStockPrice"></label><br>
+  <label>Stock Volume: <input type="number" data-bind="value: newStockVolume"></label><br>
+  <label>Listing Price: <input type="number" data-bind="value: newListingPrice"></label><br>
+  <label>Listed Exchange: <input data-bind="value: newListedExchange"></label><br>
+  <button data-bind="click: addstock">Add Stock</button>
+</div>
+  </div>
+
+<div data-bind="visible: showDeleteForm">
+  <h3>Delete Stock</h3>
+  <label>Stock ID: <input data-bind="value: stockIdToDelete" type="number"></label>
+  <button data-bind="click: submitDeleteStock, disable: busy">Submit Delete</button>
+</div>
+
+<!-- Toggle Update Form -->
+<div data-bind="visible: showUpdateForm">
+  <h3>Update Stock</h3>
+  <label>Enter Stock ID to be updated: <input data-bind="value: updateStockId"></label><br>
+  <label>Stock Name: <input data-bind="value: updateStockName"></label><br>
+  <label>Stock Price: <input data-bind="value: updateStockPrice"></label><br>
+  <label>Stock Volume: <input data-bind="value: updateStockVolume"></label><br>
+  <label >Stock Date: <input type="date" data-bind="value:updateStockDate"></label><br>
+  <label>Listing Price: <input data-bind="value: updateListingPrice"></label><br>
+  <label>Listed Exchange: <input data-bind="value: updateListedExchange"></label><br>
+  <button data-bind="click: updateStock">Update Stock</button>
+  <div data-bind="visible: updateErrorMessage">
+  <span style="color: red;" data-bind="text: updateErrorMessage"></span>
+</div>
+</div>
+</div>
+
+<style>/* Container styles for centering and spacing */
+.button-group {
+  display: flex;
+  justify-content: center;       /* Center horizontally */
+  gap: 2rem;                     /* Even space between buttons */
+  margin: 2.5rem 0;              /* Space above/below group */
+  flex-wrap: wrap;               /* Move to next line on smaller screens */
+}
+
+/* Button styles: light green, accessible, tactile */
+.green-btn {
+  background: #FFEB3B;          /* Bright yellow */
+  color: #355C7D;               /* Deep blue text */
+  border: none;
+  padding: 0.7em 2em;
+  border-radius: 24px;          /* Rounded, pill look */
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin: 0;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(53, 92, 125, 0.09); /* Matching shadow */
+  transition: background 0.18s, color 0.18s, transform 0.15s, box-shadow 0.15s;
+  outline: none;
+}
+
+.green-btn:hover,
+.green-btn:focus {
+  background: #FFF9C4;          /* Light yellow on hover/focus */
+  color: #355C7D;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(53, 92, 125, 0.16);
+}
+/* Container for the stocks table */
+[data-bind="visible:showTable"] {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 16px rgba(53, 92, 125, 0.08);
+  padding: 2rem;
+  margin: 2.5rem 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+[data-bind="visible:showTable"] h3 {
+  color: white;
+  margin-bottom: 1.2rem;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: inherit; /* Keeps font consistent with the rest of the app */
+  background: #f8fafd;
+}
+
+/* Header styling */
+th {
+  background: #355C7D;      /* Deep blue */
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  border-bottom: 3px solid #FFC75F; /* Gold accent line */
+  padding: 0.85em 1.2em;
+  text-align: left;
+}
+
+/* Table body cells */
+td {
+  padding: 0.8em 1.2em;
+  font-size: 1rem;
+  color: #222;
+  border-bottom: 1px solid #e6eaf0;
+}
+
+/* Zebra striping for body rows */
+tbody tr:nth-child(odd) {
+  background: #eaf6fb;
+}
+tbody tr:nth-child(even) {
+  background: #fdfdfe;
+}
+
+/* Hover effect */
+tbody tr:hover {
+  background: #FFECB3;  /* soft amber for hover */
+  transition: background 0.18s;
+}
+
+/* Remove default table borders for a cleaner look */
+table, th, td {
+  border: none;
+}
+
+/* Responsive: horizontal scrolling for small screens */
+@media (max-width: 700px) {
+  [data-bind="visible:showTable"] {
+    padding: 1rem;
+  }
+  th, td {
+    font-size: 0.95rem;
+    padding: 0.6em 0.7em;
+  }
+}
+
+/* --- Simple Slick Form Styling for Stocks --- */
+[data-bind="visible: showForm"],
+[data-bind="visible: showDeleteForm"],
+[data-bind="visible: showUpdateForm"] {
+  background: #fffbea; /* very light yellow for subtle highlight */
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(53, 92, 125, 0.09);
+  padding: 2.2rem 2rem 1.2rem 2rem;
+  margin: 2.1rem auto;
+  max-width: 370px;
+}
+
+[data-bind="visible: showForm"] h3,
+[data-bind="visible: showDeleteForm"] h3,
+[data-bind="visible: showUpdateForm"] h3 {
+  color: #355C7D;
+  margin-bottom: 1.3rem;
+}
+
+[data-bind="visible: showForm"] label,
+[data-bind="visible: showDeleteForm"] label,
+[data-bind="visible: showUpdateForm"] label {
+  display: block;
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 0.4em;
+  margin-top: 0.7em;
+}
+
+[data-bind="visible: showForm"] input,
+[data-bind="visible: showDeleteForm"] input,
+[data-bind="visible: showUpdateForm"] input {
+  width: 96%;
+  padding: 0.46em 0.85em;
+  font-size: 1.03rem;
+  border: 1px solid #FFC75F; /* Soft gold border */
+  border-radius: 6px;
+  margin-top: 0.18em;
+  margin-bottom: 0.3em;
+  outline: none;
+  background: #fff;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+[data-bind="visible: showForm"] input:focus,
+[data-bind="visible: showDeleteForm"] input:focus,
+[data-bind="visible: showUpdateForm"] input:focus {
+  border-color: #355C7D;
+  box-shadow: 0 0 0 2px #FFEB3B55;
+}
+
+/* Spacing after the button */
+[data-bind="visible: showForm"] button,
+[data-bind="visible: showDeleteForm"] button,
+[data-bind="visible: showUpdateForm"] button {
+  display: block;
+  margin: 1.3em auto 0 auto;
+}
+
+/* Optional: subtle separation for error messages in update form */
+[data-bind="visible: showUpdateForm"] span[style] {
+  display:block;
+  margin-top: 1em;
+  margin-bottom: -0.3em;
+}
+</style>

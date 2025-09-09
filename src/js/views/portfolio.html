@@ -1,0 +1,247 @@
+<div>
+  <h2>My Portfolio</h2>
+ 
+
+  <table border="1" style="border-collapse:collapse;width:100%;margin-bottom:20px;">
+    <thead>
+      <tr>
+        <th>Stock ID</th>
+        <th>Stock Name</th>
+        <th>Stock Price</th>
+        <th>Total Bought</th>
+        <th>Total Sold</th>
+        <th>Net Holding</th>
+        <th>Current Value</th>
+        <th>Sell</th>
+      </tr>
+    </thead>
+   
+    <tbody data-bind="foreach: portfolio">
+      <tr>
+        <td data-bind="text: stockId"></td>
+        <td data-bind="text: stockName"></td>
+        <td data-bind="text: stockPrice"></td>
+        <td data-bind="text: totalBought"></td>
+        <td data-bind="text: totalSold"></td>
+        <td data-bind="text: netHolding"></td>
+        <td data-bind="text: currentValue"></td>
+        <td>
+         <button data-bind="click: $parent.sellStock">Sell</button>
+        </td>
+      </tr>
+    </tbody>
+   
+    
+
+  </table>
+ 
+      <span data-bind="text: portfolioEmptyMessage"></span>
+    
+  <div data-bind="visible: sellMsg, text: sellMsg" style="color:green;margin-bottom:6px;"></div>
+  <div data-bind="visible: sellError, text: sellError" style="color:red;margin-bottom:6px;"></div>
+  <div data-bind="if: showSellForm">
+    
+    <form data-bind="submit: confirmSell">
+      <label>
+        Quantity (max <span data-bind="text: sellMaxQty"></span>):
+        <input type="number" data-bind="value: sellQty" min="1" required>
+      </label>
+      <button type="submit">Confirm Sell</button>
+   
+      <button type="button" data-bind="click: hideSellForm">Cancel</button>
+    </form>
+  </div>
+</div>
+<br>
+<button data-bind="click: toggleTxnHistory, text: txnHistoryVisible() ? 'Hide Transaction History' : 'Show Transaction History'"></button>
+
+<div data-bind="visible: txnHistoryVisible" style="margin-top:16px;">
+  <h3>Transaction History</h3>
+  <table border="1" style="border-collapse:collapse;width:100%;">
+    <thead>
+      <tr>
+        <th>Txn ID</th>
+        <th>Stock ID</th>
+        <th>Txn Price</th>
+        <th>Txn Type</th>
+        <th>Quantity</th>
+        <th>Txn Date</th>
+      </tr>
+    </thead>
+    <tbody data-bind="foreach: transactionHistory">
+      <tr>
+        <td data-bind="text: txnId"></td>
+        <td data-bind="text: stockId"></td>
+        <td data-bind="text: txnPrice"></td>
+        <td data-bind="text: txnType"></td>
+        <td data-bind="text: qty"></td>
+        <td data-bind="text: txnDate"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<style>
+    /* ========== Portfolio Page Themed Styles ========== */
+
+/* Title */
+h2 {
+  color: #355C7D;
+  text-align: left;
+  margin-top: 1.8em;
+  margin-bottom: 1.1em;
+  font-size: 1.7em;
+  letter-spacing: 0.5px;
+}
+
+/* Table container (if desired, wrap in a class for more control) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f8fafd;
+  border-radius: 13px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: 0 3px 14px #e0e0e099;
+}
+
+/* Table header */
+th {
+  background: #355C7D;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.07rem;
+  letter-spacing: 0.03em;
+  border-bottom: 3px solid #FFEB3B;
+  padding: 0.85em 1.1em;
+  text-align: left;
+}
+
+/* Table body cells */
+td {
+  padding: 0.78em 1.1em;
+  font-size: 1rem;
+  color: #222;
+  border-bottom: 1px solid #e6eaf0;
+}
+
+/* Zebra striping */
+tbody tr:nth-child(odd) {
+  background: #eaf6fb;
+}
+tbody tr:nth-child(even) {
+  background: #fdfdfe;
+}
+
+/* Row hover effect */
+tbody tr:hover {
+  background: #FFF9C4;   /* light yellow */
+  transition: background 0.16s;
+}
+
+/* Remove default borders */
+table, th, td {
+  border: none;
+}
+
+/* Themed Sell button */
+button, input[type="submit"] {
+  background: #FFEB3B;
+  color: #355C7D;
+  font-weight: 600;
+  border: none;
+  border-radius: 22px;
+  font-size: 1rem;
+  padding: 0.6em 1.12em;
+  /* margin as appropriate for your layout */
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s, box-shadow 0.12s;
+  box-shadow: 0 1px 7px rgba(53,92,125,.07);
+  outline: none;
+}
+
+button[type="submit"], input[type="submit"] {
+  background: #FFEB3B;
+}
+
+button:hover, button:focus, input[type="submit"]:hover {
+  background: #FFF9C4;
+  color: #355C7D;
+}
+
+button[type="button"] {
+  background: #fff;
+  color: #355C7D;
+  border: 1.5px solid #FFC75F;
+  margin-left: 12px;
+}
+button[type="button"]:hover {
+  background: #FFEB3B;
+  color: #355C7D;
+}
+
+/* Sell form */
+form {
+  background: #fffbea;
+  border-radius: 10px;
+  box-shadow: 0 1px 8px #FFC75F33;
+  padding: 1.5em 1.5em 0.7em 1.5em;
+  max-width: 340px;
+  margin-top: 14px;
+  margin-bottom: 25px;
+}
+form label {
+  display: block;
+  color: #222;
+  font-weight: 500;
+  margin-bottom: 0.8em;
+  margin-top: 0.15em;
+}
+form input[type="number"] {
+  width: 90px;
+  padding: 0.45em 0.7em;
+  font-size: 1rem;
+  border: 1px solid #FFC75F;
+  border-radius: 6px;
+  margin-left: 7px;
+  margin-right: 4px;
+  outline: none;
+  background: #fff;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+form input[type="number"]:focus {
+  border-color: #355C7D;
+  box-shadow: 0 0 0 2px #FFEB3B66;
+}
+
+/* Transaction Messages */
+[data-bind="visible: sellMsg"], [data-bind="visible: sellError"] {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Transaction Table Section heading */
+h3 {
+  color: #355C7D;
+  margin: 1.2em 0 0.7em 0;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 700px) {
+  table th, table td {
+    font-size: 0.95rem;
+    padding: 0.63em 0.68em;
+  }
+  form {
+    padding: 1em 0.8em 0.7em 0.8em;
+    max-width: 98vw;
+  }
+}
+
+/* Success & Error message colors (already inline, but add here for fallback) */
+[data-bind="visible: sellMsg"] {
+  color: green;
+}
+[data-bind="visible: sellError"] {
+  color: red;
+}
+</style>

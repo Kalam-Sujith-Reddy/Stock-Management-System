@@ -1,0 +1,118 @@
+<!-- reports.html -->
+<style>
+  .section-container {
+    margin: 20px auto;
+    padding: 1.5em 1.5em 1em 1.5em;
+    max-width: 650px;
+    border-radius: 12px;
+    box-shadow: 0 2px 18px #e0e0e099;
+    background: #f7fbff;
+    border-left: 6px solid #337ab7;
+    margin-bottom: 32px;
+  }
+  .section-header {
+    font-size: 1.35em;
+    color: #23527c;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .section-header:hover { color: #1a488a; }
+  .oj-button {
+    margin-right: 18px;
+  }
+  .report-label {
+    font-weight: bold;
+    margin-right: 6px;
+    color: #23527c;
+  }
+  .toggle-icon {
+    font-size: 1.1em;
+    margin-right: 8px;
+    transition: 0.2s;
+  }
+  .collapsed .toggle-icon {
+    transform: rotate(-90deg);
+  }
+  @media (max-width: 700px) {
+    .section-container { max-width: 95vw; }
+  }
+  .oj-list-view {
+    background: #eaf2ff;
+    border-radius: 4px;
+    padding: 10px 7px;
+    border: 1px solid #d4e9e2;
+  }
+  .oj-list-view li {
+    margin: 4px 0;
+  }
+
+  
+</style>
+
+<h1 style="text-align:center;color:#2265ae;margin-bottom:2em;">Reports Dashboard</h1>
+
+<section class="section-container" data-bind="css: {collapsed: !showMaxAsset()}">
+  <div class="section-header" data-bind="click: toggleShowMaxAsset">
+    <span class="toggle-icon">&#9660;</span> <!-- Down arrow -->
+    Customer with Max Asset Value
+  </div>
+  <div data-bind="visible: showMaxAsset">
+    <oj-button class="oj-button-primary" on-oj-action="[[getMaxAssetCustomer]]">Show</oj-button>
+    <span class="report-label">Customer:</span>
+    <span data-bind="text: maxAssetCustomer"></span>
+  </div>
+</section>
+
+<section class="section-container" data-bind="css: {collapsed: !showMinAsset()}">
+  <div class="section-header" data-bind="click: toggleShowMinAsset">
+    <span class="toggle-icon">&#9660;</span>
+    Customer with Min Asset Value
+  </div>
+  <div data-bind="visible: showMinAsset">
+    <oj-button class="oj-button-danger" on-oj-action="[[getMinAssetCustomer]]">Show</oj-button>
+    <span class="report-label">Customer:</span>
+    <span data-bind="text: minAssetCustomer"></span>
+  </div>
+</section>
+
+<section class="section-container" data-bind="css: {collapsed: !showMostTransacted()}">
+  <div class="section-header" data-bind="click: toggleShowMostTransacted">
+    <span class="toggle-icon">&#9660;</span>
+    Most Transacted Stock
+  </div>
+  <div data-bind="visible: showMostTransacted">
+    <oj-button class="oj-button-confirm" on-oj-action="[[getMostTransactedStock]]">Show</oj-button>
+    <span class="report-label">Stock:</span>
+    <span data-bind="text: mostTransactedStock"></span>
+  </div>
+</section>
+
+<section class="section-container" data-bind="css: {collapsed: !showLeastTransacted()}">
+  <div class="section-header" data-bind="click: toggleShowLeastTransacted">
+    <span class="toggle-icon">&#9660;</span>
+    Least Transacted Stock
+  </div>
+  <div data-bind="visible: showLeastTransacted">
+    <oj-button class="oj-button-warning" on-oj-action="[[getLeastTransactedStock]]">Show</oj-button>
+    <span class="report-label">Stock:</span>
+    <span data-bind="text: leastTransactedStock"></span>
+  </div>
+</section>
+
+<section class="section-container" data-bind="css: {collapsed: !showNeverTransacted()}">
+  <div class="section-header" data-bind="click: toggleShowNeverTransacted">
+    <span class="toggle-icon">&#9660;</span>
+    Stocks Never Transacted
+  </div>
+  <div data-bind="visible: showNeverTransacted">
+    <oj-button class="oj-button-info" on-oj-action="[[getNeverTransactedStocks]]">Show</oj-button>
+    <oj-list-view data="[[neverTransactedStocksDP]]">
+      <template slot="itemTemplate" data-oj-as="item">
+        <li><span data-bind="text: item.data.STOCK_NAME"></span></li>
+      </template>
+    </oj-list-view>
+  </div>
+</section>

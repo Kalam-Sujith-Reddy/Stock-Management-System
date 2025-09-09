@@ -1,0 +1,189 @@
+<!--
+ Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+ Licensed under The Universal Permissive License (UPL), Version 1.0
+ as shown at https://oss.oracle.com/licenses/upl/
+ -->
+<div class="oj-hybrid-padding">
+  <h1>Customers Page</h1>
+  <div>
+   <button data-bind="click:toggleCustomers, text: showTable() ? 'Hide Customers' : 'List Customers'">List Customer</button>
+    <button data-bind="click: toggleDeleteForm">Delete Customer</button>
+       <div data-bind="visible:showTable">
+          <h3>Customer details table</h3>
+<table border="3" >
+  <thead>
+    <tr>
+      <th>Customer ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>City</th>
+    </tr>
+  </thead>
+  <tbody data-bind="foreach: customers">
+    <tr>
+      <td data-bind="text: custId"></td>
+      <td data-bind="text: firstName"></td>
+      <td data-bind="text: lastName"></td>
+      <td data-bind="text: phoneNumber"></td>
+      <td data-bind="text: emailId"></td>
+       <td data-bind="text: city"></td>
+
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+  </div>
+</div>
+
+<div data-bind="if: showDeleteForm">
+    <h3>Delete Customer</h3>
+    <div class="delete-container">
+        <label>Customer ID to Delete:
+            <input type="number" data-bind="value: stockIdToDelete">
+        </label>
+    </div>
+    <button data-bind="click: submitDeleteCustomer, disable: busy">Submit Delete</button>
+</div>
+<style>
+  /* --- Customer Table Buttons --- */
+button[data-bind] {
+  background: #FFEB3B;          /* Bright Yellow */
+  color: #355C7D;               /* Deep blue text */
+  font-weight: 600;
+  border: none;
+  padding: 0.6em 1.3em;
+  border-radius: 22px;
+  font-size: 1rem;
+  margin: 0.4em 0.6em 1.3em 0;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.13s;
+  box-shadow: 0 2px 8px rgba(53, 92, 125, 0.07);
+}
+
+button[data-bind]:hover,
+button[data-bind]:focus {
+  background: #FFF9C4;          /* Light yellow on hover/focus */
+  color: #355C7D;
+}
+
+/* --- Customer Table Container --- */
+[data-bind="visible:showTable"] {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 18px rgba(53,92,125,0.13);
+  padding: 2rem;
+  margin: 2.5rem 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+[data-bind="visible:showTable"] h3 {
+  color: #355C7D;
+  margin-bottom: 1.2rem;
+}
+
+/* --- Customer Table Styles --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fbfdff;
+  font-family: inherit;
+}
+
+/* Table header */
+th {
+  background: #355C7D;           /* Deep blue */
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.04rem;
+  letter-spacing: 0.02em;
+  border-bottom: 3px solid #FFC75F;  /* gold accent */
+  padding: 0.85em 1.1em;
+  text-align: left;
+}
+
+/* Table body cells */
+td {
+  padding: 0.8em 1.1em;
+  font-size: 1rem;
+  color: #222;
+  border-bottom: 1px solid #e6eaf0;
+}
+
+/* Zebra striping for rows */
+tbody tr:nth-child(odd) {
+  background: #eaf6fb;
+}
+tbody tr:nth-child(even) {
+  background: #fdfdfe;
+}
+
+/* Row hover effect */
+tbody tr:hover {
+  background: #FFECB3;   /* soft amber */
+  transition: background 0.16s;
+}
+
+/* Remove default borders for a tidy look */
+table, th, td {
+  border: none;
+}
+
+/* Responsive: table horizontally scrolls on small screens */
+@media (max-width: 700px) {
+  [data-bind="visible:showTable"] {
+    padding: 1rem;
+  }
+  th, td {
+    font-size: 0.96rem;
+    padding: 0.55em 0.68em;
+  }
+}
+[data-bind="visible: showDeleteForm"] {
+  background: #fffbea; /* Very light yellow matching your theme */
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(53, 92, 125, 0.09);
+  padding: 2.2rem 2rem 1.2rem 2rem;
+  margin: 2.1rem auto;
+  max-width: 370px;
+}
+
+[data-bind="visible: showDeleteForm"] h3 {
+  color: #355C7D;
+  margin-bottom: 1.3rem;
+}
+
+[data-bind="visible: showDeleteForm"] label {
+  display: block;
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 0.4em;
+  margin-top: 0.7em;
+}
+
+[data-bind="visible: showDeleteForm"] input {
+  width: 96%;
+  padding: 0.46em 0.85em;
+  font-size: 1.03rem;
+  border: 1px solid #FFC75F; /* Soft gold border */
+  border-radius: 6px;
+  margin-top: 0.18em;
+  margin-bottom: 0.3em;
+  outline: none;
+  background: #fff;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+[data-bind="visible: showDeleteForm"] input:focus {
+  border-color: #355C7D;
+  box-shadow: 0 0 0 2px #FFEB3B55;
+}
+
+[data-bind="visible: showDeleteForm"] button {
+  display: block;
+  margin: 1.3em auto 0 auto;
+}
+
+</style> 
